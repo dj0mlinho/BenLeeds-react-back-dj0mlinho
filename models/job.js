@@ -11,17 +11,17 @@ const jobSchema = mongoose.Schema({
   workorder: { type: mongoose.Schema.Types.ObjectId, ref: 'Workorder' },
   vendor: { type: mongoose.Schema.Types.ObjectId, ref: 'Vendor' },
   //namesti za status da ima created, pa onda da ima sent, i onda na kraju finished
-  status: { type: String, required: true, default: "pending" },
+  status: { type: String, default: "pending" },
   assignmentDate: {
     type: String,
     default: ''
   },
-  // ON NEMA OVA TRI DOLE, KAO NI ADMIN COMMENT
-  apartment: String,
+  // ON NEMA OVO DOLE
+  apartmentNumber: String,
   building: { type: mongoose.Schema.Types.ObjectId, ref: 'Building' },
+  finishedDate: { type: Date, default: Date.now() },
   // adminComment: String,
-  sentDate: { type: Date, default: Date.now() },
-  endDate: Date
+  // endDate: Date
 });
 
 module.exports = mongoose.model('Job', jobSchema);

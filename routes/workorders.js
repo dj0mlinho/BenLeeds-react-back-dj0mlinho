@@ -5,37 +5,34 @@ const Job = require('../models/job');
 const router = express.Router();
 
 // Get All
-router.get('/api/workorders', async (req, res, next) => {
-  const pageSize = +req.query.pagesize;
-  const currentPage = +req.query.page;
-  const woQuery = Workorder.find();
+router.get('/admin', async (req, res, next) => {
+  // const pageSize = +req.query.pagesize;
+  // const currentPage = +req.query.page;
+  // const woQuery = Workorder.find();
 
   try {
-    if (pageSize && currentPage) {
-      woQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
-    }
-    const workordersCount = await Workorder.countDocuments();
-    const workorders = await woQuery
+    // if (pageSize && currentPage) {
+    //   woQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
+    // }
+    // const workordersCount = await Workorder.countDocuments();
+    const workorders = await Workorder.find()
       .populate('user')
       .populate('jobs')
+      .populate('building')
       .populate({
         path: 'jobs',
         populate: { path: 'vendor' }
       })
-      .sort('status')
-      .sort({ sendDate: -1 });
     res.status(200).json({
-      message: 'success',
-      workorders: workorders,
-      count: workordersCount
+      workorders
     });
   } catch (error) {
     res.status(500).json({
-      message: 'No workorder fetched!'
+      error
     });
   }
 });
-
+/* 
 // Worker creating with starting info
 router.post('/api/workorderStartInfo', async (req, res, next) => {
   try {
@@ -90,6 +87,6 @@ router.post('/api/workorderJobs', async (req, res, next) => {
   res
     .status(200)
     .json({ message: 'success', jobs: savedJobs, workorder: savedWorkorder });
-});
+}); */
 
 module.exports = router;

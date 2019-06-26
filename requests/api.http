@@ -6,15 +6,35 @@ Content-Type: application/json
   "password":"1234"
 }
 
-
+###
+GET http://localhost:3500/admin
 
 ###
-GET http://localhost:3000/api/all
-
-
+GET http://localhost:3500/admin/users
 
 ###
-GET http://localhost:3000/api/items
+POST http://localhost:3500/admin/newUser
+Content-Type: application/json
+
+{"name":"Jovan",
+  "email": "malden@gmail.com",
+  "password":"123",
+  "emailPassword": "134242",
+  "region":"Los Angeles",
+  "status":"active"}
+
+###
+POST http://localhost:3500/admin/editUser/5d13fa5981a1f8350c74d57e
+Content-Type: application/json
+
+{"name":"Jovan",
+  "email": "malden@gmail.com",
+  "password":"123",
+  "emailPassword": "134242",
+  "region":"Los Angeles",
+  "status":"disabled"}
+
+
 
 ###
 GET http://localhost:3000/api/rooms

@@ -35,71 +35,62 @@ router.post('/login', async (req, res) => {
   }
 });
 
-/* // Gel all users
-router.get('/api/users', async (req, res, next) => {
-  checkAuth;
-  let users;
-  const pageSize = +req.query.pagesize;
-  const currentPage = +req.query.page;
-  const usersQuery = User.find();
-  let usersCount;
+// Gel all users
+router.get('/admin/users', async (req, res, next) => {
+  // checkAuth;
+  // let users;
+  // const pageSize = +req.query.pagesize;
+  // const currentPage = +req.query.page;
+  // const usersQuery = User.find();
+  // let usersCount;
   try {
-    if (pageSize && currentPage) {
-      usersQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
-    }
-    usersCount = await User.countDocuments();
-    users = await usersQuery.sort('firstName');
-    res
-      .status(200)
-      .json({ message: 'success', users: users, count: usersCount });
+    // if (pageSize && currentPage) {
+    //   usersQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
+    // }
+    // usersCount = await User.countDocuments();
+    users = await User.find();
+    res.status(200).json(users);
   } catch (error) {
-    res.status(500).json({ error: error });
+    res.status(500).json(error);
   }
 });
 
 // Admin Create User
-router.post('/api/admin/user', async (req, res, next) => {
-  checkAuth;
+router.post('/admin/newUser', async (req, res, next) => {
+  // checkAuth;
   let hashedPass = await bcrypt.hash(req.body.password, 10);
   try {
     const user = new User({
       name: req.body.name,
       email: req.body.email,
+      emailPassword: req.body.emailPassword,
       password: hashedPass,
-      regionId: req.body.regionId
+      region: req.body.region,
+      status: req.body.status
     });
     const result = await user.save();
-    res.status(201).json({ message: 'User created!', user: result });
+    res.status(201).json({ success: 'ok' });
   } catch (error) {
-    res.status(500).json({ message: 'Creating a user failed!' });
+    res.status(500).json({ error: error });
   }
 });
 
-// NAMESTI DA BUDE PUT A NE POST!!!
-// Admin Edit User
-router.post('/api/admin/user/:_id', async (req, res, next) => {
-  checkAuth;
+// Admin Edit/Delete User
+router.post('/admin/editUser/:_id', async (req, res, next) => {
+  // checkAuth;
   try {
     let submittedUser = await User.findById(req.params._id);
     submittedUser.name = req.body.name;
     submittedUser.email = req.body.email;
     submittedUser.password = req.body.password;
-    submittedUser.regionId = req.body.regionId;
+    submittedUser.emailPassword = req.body.emailPassword;
+    submittedUser.region = req.body.region;
+    submittedUser.status = req.body.status;
     const savedUser = await submittedUser.save();
-    res.status(200).json({ message: 'User edited.', user: savedUser });
+    res.status(200).json({ success: 'ok' });
   } catch (error) {
-    res.status(500).json({ message: "Couldn't update user!" });
+    res.status(500).json({ error: error });
   }
 });
-// Admin Delete User
-router.delete('/api/admin/user/:_id', async (req, res, next) => {
-  checkAuth;
-  try {
-    const result = await User.deleteOne({ _id: req.params._id });
-    res.status(200).json({ message: 'User deleted.', user: result });
-  } catch (error) {
-    res.status(500).json({ message: "Couldn't delete user!" });
-  }
-}); */
 
 module.exports = router;

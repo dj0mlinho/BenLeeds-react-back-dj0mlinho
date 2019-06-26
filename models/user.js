@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-// const uniqueValidator = require('mongoose-unique-validator');
+const uniqueValidator = require('mongoose-unique-validator');
 
 const userSchema = mongoose.Schema({
   // ON NEMA UNIQUE
@@ -11,6 +11,6 @@ const userSchema = mongoose.Schema({
   status: { type: String, default: 'active' }
 });
 
-// userSchema.plugin(uniqueValidator);
+userSchema.plugin(uniqueValidator);
 
 module.exports = mongoose.model('User', userSchema);
