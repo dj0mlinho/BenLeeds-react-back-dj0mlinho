@@ -1,0 +1,14 @@
+{
+  "env": {
+    "PORT": 3500,
+    "MONGO_ATLAS_USERNAME": "root",
+    "MONGO_ATLAS_KEY": "PARtizan1945",
+    "JWT_KEY": "scrtbl",
+    "ADMIN_EMAIL": "mladenj@skydream.info",
+    "ADMIN_PASSWORD": "1234",
+    "ADMIN_EMAIL_PASSWORD": "P0slednjiKr0jac",
+    "ADMIN_EMAIL_HOST": "mail.skydream.info",
+    "TWILIO_NUMBER": "+12056198569",
+    "NODE_ENV": "development"
+  }
+}
