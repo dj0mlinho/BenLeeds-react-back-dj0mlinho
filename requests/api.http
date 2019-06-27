@@ -46,6 +46,30 @@ GET http://localhost:3500/admin/newItem
 POST http://localhost:3500/admin/items/5d140fc1a1f7e539bcb20893
 Content-Type: application/json
 
+
+###
+POST http://localhost:3500/admin/editItem/5d0d247338c882186c96d124
+Content-Type: application/json
+
+{
+  "name": "door",
+  "subCategory":"new category",
+  "price": "10",
+  "room": "Kitchen",
+  "link": ""
+}
+###
+POST http://localhost:3500/admin/newItem
+Content-Type: application/json
+
+{
+  "name": "door",
+  "subCategory":"new category",
+  "price": "10",
+  "room": "Kitchen",
+  "link": ""
+}
+
 ###
 POST http://localhost:3000/api/admin/user
 Content-Type: application/json

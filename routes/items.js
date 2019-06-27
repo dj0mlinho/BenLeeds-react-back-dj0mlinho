@@ -58,28 +58,41 @@ router.get('/admin/rooms/:room', async (req, res, next) => {
 // });
 
 // // Create New Item
-// router.post('/api/admin/item', async (req, res, next) => {
-//   const item = new Item({
-//     name: req.body.name,
-//     subcat: req.body.subcat,
-//     room: req.body.room,
-//     price: Number(req.body.price),
-//     quantity: null,
-//     comment: ''
-//   });
-//   const result = await item.save();
-//   res.status(200).json({ message: 'success', item: result });
-// });
+router.post('/admin/newItem', async (req, res, next) => {
+  try {
+    const item = new Item({
+      name: req.body.name,
+      subCategory: req.body.subCategory,
+      room: req.body.room,
+      price: Number(req.body.price),
+      link: req.body.link
+    });
+    const result = await item.save();
+    res.status(200).json({ success: 'ok' });
+  } catch (error) {
+    res.status(500).json({
+      error: error
+    });
+  }
+});
 
-// // Admin Edit Items
-// router.post('/api/admin/item/:id', async (req, res, next) => {
-//   let submittedItem = await Item.findById(req.params.id);
-//   submittedItem.name = req.body.name;
-//   submittedItem.subcat = req.body.subcat;
-//   submittedItem.price = req.body.price;
-//   const savedItem = await submittedItem.save();
-//   res.status(200).json({ message: 'success', item: savedItem });
-// });
+// Admin Edit Items
+router.post('/admin/editItem/:id', async (req, res, next) => {
+  try {
+    let submittedItem = await Item.findById(req.params.id);
+    submittedItem.name = req.body.name;
+    submittedItem.subCategory = req.body.subCategory;
+    submittedItem.price = Number(req.body.price);
+    submittedItem.room = req.body.room;
+    submittedItem.link = req.body.link;
+    const savedItem = await submittedItem.save();
+    res.status(200).json({ success: 'ok' });
+  } catch (error) {
+    res.status(500).json({
+      error: error
+    });
+  }
+});
 
 // Admin Delete Items
 router.post('/admin/items/:id', async (req, res, next) => {
@@ -87,9 +100,7 @@ router.post('/admin/items/:id', async (req, res, next) => {
     const result = await Item.deleteOne({ _id: req.params.id });
     res.status(200).json({ success: 'ok' });
   } catch (error) {
-    res.status(500).json({
-      error: error
-    });
+    res.status(500).json({ error: error });
   }
 });
 
