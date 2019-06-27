@@ -42,7 +42,8 @@ GET http://localhost:3500/admin/rooms/living%20room
 ###
 GET http://localhost:3500/admin/newItem
 ###
-POST http://localhost:3000/api/workorders
+
+POST http://localhost:3500/admin/items/5d140fc1a1f7e539bcb20893
 Content-Type: application/json
 
 ###
