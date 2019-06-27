@@ -3,23 +3,26 @@ const Item = require('../models/item');
 
 const router = express.Router();
 
-// Get All
-router.get('/api/items', async (req, res, next) => {
-  const pageSize = +req.query.pagesize;
-  const currentPage = +req.query.page;
-  const itemsQuery = Item.find();
+// Get Items from Room
+router.get('/admin/rooms/:room', async (req, res, next) => {
+  // const pageSize = +req.query.pagesize;
+  // const currentPage = +req.query.page;
+  // const itemsQuery = Item.find();
   try {
-    if (pageSize && currentPage) {
-      itemsQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
-    }
-    const itemsCount = await Item.countDocuments();
-    const items = await itemsQuery.sort('name').populate('room');
-    res
-      .status(200)
-      .json({ message: 'success', items: items, count: itemsCount });
+    // if (pageSize && currentPage) {
+    //   itemsQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
+    // }
+    // const itemsCount = await Item.countDocuments();
+    console.log(req.params.room.toLowerCase());
+    const result = await Item.find().sort('name');
+    console.log(result)
+    const items = result.filter((item) => {
+     return item.room.toLowerCase()==req.params.room.toLowerCase()
+    })
+    res.status(200).json(items);
   } catch (error) {
     res.status(500).json({
-      message: 'No fetched items!'
+      error: error
     });
   }
 });

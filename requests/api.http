@@ -37,10 +37,10 @@ Content-Type: application/json
 
 
 ###
-GET http://localhost:3000/api/rooms
+GET http://localhost:3500/admin/rooms/living%20room
 
 ###
-GET http://localhost:3000/api/workorders
+GET http://localhost:3500/admin/newItem
 ###
 POST http://localhost:3000/api/workorders
 Content-Type: application/json
